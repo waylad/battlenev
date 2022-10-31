@@ -122,6 +122,7 @@ export class GarageScene extends Phaser.Scene {
     buttonNext.setInteractive({ cursor: 'pointer' })
     buttonNext.on('pointerdown', () => {
       this.scene.start('Game')
+      // this.scene.start('Bg')
     })
   }
 

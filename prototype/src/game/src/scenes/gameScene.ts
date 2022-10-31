@@ -328,7 +328,7 @@ export class GameScene extends Phaser.Scene {
     graphics.fillPath();*/
 
     // draw the grass
-    graphics.lineStyle(16, 0x6b9b1e)
+    graphics.lineStyle(16, 0x4E4640)
     graphics.beginPath()
     simpleSlope.forEach(function (point: any) {
       graphics.lineTo(point.x, point.y)

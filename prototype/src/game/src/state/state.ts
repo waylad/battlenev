@@ -29,7 +29,7 @@ export let state: State = {
   // rocks ratio, in %
   rocksRatio: 5,
   // mountain colors
-  mountainColors: [0x3d6728, 0x244016, 0x2d2c2c, 0x3a3232, 0x2d2c2c],
+  mountainColors: [0x39332D, 0x6C655E, 0x2d2c2c, 0x3a3232, 0x2d2c2c],
   // line width for each mountain color, in pixels
   mountainColorsLineWidth: [0, 70, 100, 110, 500],
   paused: false,

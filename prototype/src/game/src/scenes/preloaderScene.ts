@@ -57,6 +57,7 @@ export class PreloaderScene extends Phaser.Scene {
     this.load.image('background', './assets/background.png')
     this.load.image('bg-home', './assets/bg-home.png')
     this.load.image('bg-garage', './assets/bg-garage.png')
+    this.load.image('bg-level', './assets/bg-level.png')
 
     this.load.svg('button-play', './assets/button-play.svg')
     this.load.svg('car-bg', './assets/car-bg.svg')
