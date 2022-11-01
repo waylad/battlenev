@@ -27,7 +27,7 @@ export let state: State = {
   // maximum car velocity
   maxCarVelocity: 1,
   // rocks ratio, in %
-  rocksRatio: 5,
+  rocksRatio: 2,
   // mountain colors
   mountainColors: [0x39332D, 0x6C655E, 0x2d2c2c, 0x3a3232, 0x2d2c2c],
   // line width for each mountain color, in pixels

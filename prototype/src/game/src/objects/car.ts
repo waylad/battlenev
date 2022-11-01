@@ -24,7 +24,7 @@ export default class Car {
     width: number = 278,
     height: number = 100,
     wheelSize: number = 30,
-    wheelOffset: { x: number; y: number } = { x: 42, y: 62 },
+    wheelOffset: { x: number; y: number } = { x: 38, y: 62 },
   ) {
     this._scene = scene
 
@@ -39,7 +39,7 @@ export default class Car {
     const Matter = Phaser.Physics.Matter.Matter
 
     let group = scene.matter.world.nextGroup(true)
-    
+
     let body = scene.matter.add.image(x, y, 'car0')
     body.setScale(0.5)
     body.setBody(
@@ -62,7 +62,7 @@ export default class Car {
       },
     )
 
-    let wheelA = scene.matter.add.image(x + wheelAOffset, y + wheelYOffset, 'wwwheel0')
+    let wheelA = scene.matter.add.image(x + wheelAOffset, y + wheelYOffset, 'singleWheel0')
     wheelA.setScale(0.5)
     wheelA.setBody(
       {
@@ -79,7 +79,7 @@ export default class Car {
       },
     )
 
-    let wheelB = scene.matter.add.image(x + wheelBOffset, y + wheelYOffset, 'wwwheel0')
+    let wheelB = scene.matter.add.image(x + wheelBOffset, y + wheelYOffset, 'singleWheel0')
     wheelB.setScale(0.5)
     wheelB.setBody(
       {

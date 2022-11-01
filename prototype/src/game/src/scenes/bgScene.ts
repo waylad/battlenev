@@ -1,5 +1,5 @@
 export class BgScene extends Phaser.Scene {
-  constructor(aParams) {
+  constructor() {
     super({
       key: 'Bg',
     })
@@ -11,11 +11,9 @@ export class BgScene extends Phaser.Scene {
     const bgLevel = this.add.tileSprite(
       this.sys.canvas.width / 2,
       this.sys.canvas.height / 2,
-      this.sys.canvas.width /2,
-      this.sys.canvas.height /2,
+      this.sys.canvas.width,
+      this.sys.canvas.height,
       'bg-level',
     )
-
-    bgLevel.setDepth(-1000);
   }
 }

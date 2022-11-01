@@ -93,7 +93,11 @@ export class PreloaderScene extends Phaser.Scene {
     this.load.svg('upgradeWeight3', './assets/upgrades/weight3.svg')
     this.load.svg('upgradeWheel3', './assets/upgrades/wheel3.svg')
 
-    this.load.image('wwwheel0', './assets/wheel0.png')
+    this.load.image('singleWheel0', './assets/wheel0.svg')
+    this.load.image('singleWheel1', './assets/wheel1.svg')
+    this.load.image('singleWheel2', './assets/wheel2.svg')
+    this.load.image('singleWheel3', './assets/wheel3.svg')
+    this.load.image('zombie', './assets/zombie.svg')
 
     this.load.svg('car0', './assets/parts/car0.svg')
     this.load.svg('boost0', './assets/parts/boost0.svg')

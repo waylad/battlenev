@@ -33,7 +33,7 @@ export class GameScene extends Phaser.Scene {
   private preload(): void {}
 
   private create(): void {
-    this.car = new Car(this, 200, 0)
+    this.car = new Car(this, 1000, 100)
     this.matter.world.on('collisionactive', (collisions: any, b: any, c: any) => {
       this.car.wheelsDown = { rear: false, front: false }
       collisions.pairs.forEach((pair: any) => {
@@ -98,32 +98,24 @@ export class GameScene extends Phaser.Scene {
     //   }.bind(this),
     // )
 
-    // // a text to show when we are flying
-    // this.flyingText = this.add
-    //   .text(100, 100, 'FLYING!!', {
-    //     fontFamily: 'Arial',
-    //     color: '#FF8800',
-    //   })
-    //   .setFontSize(128)
-    // this.flyingText.setVisible(false)
+    this.flyingText = this.add
+      .text(1000, 100, 'UNDER DEVELOPMENT', {
+        fontFamily: 'Electrolize',
+        color: '#FFFFFF',
+      })
+      .setFontSize(42)
 
     // // variable to count the time flying
     // this.flyingTime = 0
 
-    // // this event will check all active collisions
+    // this event will check all active collisions
     // this.matter.world.on(
     //   'collisionactive',
-    //   function (e: any) {
-    //     // no wheels colliding
-    //     this.wheelsColliding = false
-
-    //     // a collision made by a pair of bodies
+    //   function (e) {
     //     e.pairs.forEach(
     //       function (p: any) {
-    //         // if a colliding body's label is "wheel"...
-    //         if (p.bodyA.label == 'wheel' || p.bodyB.label == 'wheel') {
-    //           // at least a wheel is colliding
-    //           this.wheelsColliding = true
+    //         if (p.bodyA.label == 'wheel' || p.bodyB.label == 'zombie') {
+    //           // p.bodyB.applyForce( p.bodyB, {x: p.bodyB.position.x, y: p.bodyB.position.y}, {x: 0.05, y: 0});
     //         }
     //       }.bind(this),
     //     )
@@ -217,7 +209,7 @@ export class GameScene extends Phaser.Scene {
       // if the pool is empty...
       if (this.bodyPool.length == 0) {
         // create a new rectangle body
-        let body = this.matter.add.rectangle(center.x + mountainStart.x, center.y, distance, 10, {
+        let body = this.matter.add.rectangle(center.x + mountainStart.x, center.y + 5, distance, 20, {
           isStatic: true,
           angle: angle,
           friction: 1,
@@ -257,27 +249,44 @@ export class GameScene extends Phaser.Scene {
       if (Phaser.Math.Between(0, 100) < state.rocksRatio && (mountainStart.x > 0 || i != 1)) {
         // random rock position
         let size = Phaser.Math.Between(20, 30)
-        let depth = Phaser.Math.Between(0, size / 2)
+        let depth = Phaser.Math.Between(0, -100)
         let rockX = center.x + mountainStart.x + depth * Math.cos(angle + Math.PI / 2)
         let rockY = center.y + depth * Math.sin(angle + Math.PI / 2)
-
-        // draw the rock
-        graphics.fillStyle(0x6b6b6b, 1)
-        graphics.fillCircle(rockX - mountainStart.x, rockY, size)
 
         // if the pool is empty...
         if (this.rocksPool.length == 0) {
           // create a new circle body
-          let rock = this.matter.add.circle(rockX, rockY, size, {
-            isStatic: true,
-            angle: angle,
-            friction: 1,
-            restitution: 0,
-            collisionFilter: {
-              category: 2,
+          const Matter = Phaser.Physics.Matter
+          let group = this.matter.world.nextGroup(true)
+          let rock = this.matter.add.image(rockX, rockY, 'zombie')
+          rock.setScale(0.6)
+          rock.setBody(
+            {
+              type: 'rectangle',
+              width: 30,
+              height: 80,
+              // type: 'circle',
+              // radius: 25,
             },
-            label: 'rock',
-          })
+            {
+              label: 'zombie',
+              collisionFilter: {
+                group: group,
+              },
+              density: 0.0002,
+            },
+          )
+          // let rock = this.matter.add.circle(rockX, rockY, size, {
+          //   isStatic: false,
+          //   angle: angle,
+          //   friction: 1,
+          //   restitution: 0,
+          //   density: 0.002,
+          //   collisionFilter: {
+          //     category: 2,
+          //   },
+          //   label: 'rock',
+          // })
 
           // assign inPool property to check if the body is in the pool
           // @ts-ignore
@@ -342,86 +351,6 @@ export class GameScene extends Phaser.Scene {
     return new Phaser.Math.Vector2(graphics.x + pointX - 1, slopeStart.y)
   }
 
-  // method to build the car
-  addCar(posX: any, posY: any) {
-    // car is made by three rectangle bodies which will be merged into a compound object
-    let floor = Matter.Bodies.rectangle(posX, posY, 100, 10, {
-      label: 'car',
-    })
-    let rightBarrier = Matter.Bodies.rectangle(posX + 45, posY - 15, 10, 20, {
-      label: 'car',
-    })
-    let leftBarrier = Matter.Bodies.rectangle(posX - 45, posY - 15, 10, 20, {
-      label: 'car',
-    })
-
-    // this is how we create the compound object
-    this.body = Matter.Body.create({
-      // array of single bodies
-      parts: [floor, leftBarrier, rightBarrier],
-      friction: 1,
-      restitution: 0,
-    })
-
-    // add the body to the world
-    this.matter.world.add(this.body)
-
-    // the diamond. It cannot fall off the car
-    this.diamond = this.matter.add.rectangle(posX, posY - 40, 30, 30, {
-      friction: 1,
-      restitution: 0,
-      label: 'diamond',
-    })
-
-    // ---------------- add front wheel ---------------- //
-    this.frontWheel = this.matter.add.circle(posX + 35, posY + 25, 30, {
-      friction: 1,
-      restitution: 0,
-      collisionFilter: {
-        mask: 2,
-      },
-      label: 'wheel',
-    })
-
-    // add rear wheel
-    this.rearWheel = this.matter.add.circle(posX - 35, posY + 25, 30, {
-      friction: 1,
-      restitution: 0,
-      collisionFilter: {
-        mask: 2,
-      },
-      label: 'wheel',
-    })
-
-    // these two constraints will bind front wheel to the body
-    this.matter.add.constraint(this.body, this.frontWheel, 20, 0, {
-      pointA: {
-        x: 30,
-        y: 0,
-      },
-    })
-    this.matter.add.constraint(this.body, this.frontWheel, 20, 0, {
-      pointA: {
-        x: 45,
-        y: 0,
-      },
-    })
-
-    // same thing for rear wheel
-    this.matter.add.constraint(this.body, this.rearWheel, 20, 0, {
-      pointA: {
-        x: -30,
-        y: 0,
-      },
-    })
-    this.matter.add.constraint(this.body, this.rearWheel, 20, 0, {
-      pointA: {
-        x: -45,
-        y: 0,
-      },
-    })
-  }
-
   // method to accelerate
   accelerate() {
     // this.isAccelerating = true
@@ -447,75 +376,12 @@ export class GameScene extends Phaser.Scene {
     // set the smooth zoom
     const wheelRear = this.car.bodies[1]
     const currentZoom = this.cameras.main.zoom
-    let zoom = 1 - wheelRear.angularVelocity / 2.5
+    let zoom = 1 - wheelRear.angularVelocity / 5
     if (zoom > currentZoom + currentZoom * 0.002) zoom = currentZoom + currentZoom * 0.002
     else if (zoom < currentZoom - currentZoom * 0.002) zoom = currentZoom - currentZoom * 0.002
     if (zoom > 1) zoom = 1
     this.cameras.main.setZoom(zoom)
     this.car.update()
-
-    // if (this.cursors.right.isDown) {
-    //   this.car.gas.right = true
-    // }
-    // if (!this.cursors.right.isDown) {
-    //   this.car.gas.right = false
-    // }
-    // if (this.cursors.left.isDown) {
-    //   this.car.gas.left = true
-    // }
-    // if (!this.cursors.left.isDown) {
-    //   this.car.gas.left = false
-    // }
-
-    // // if wheels aren't colliding...
-    // if (!this.wheelsColliding) {
-    //   // add frame delta time to flying time
-    //   this.flyingTime += dt
-
-    //   // we can say the car is flying when it's in the air for more than 0.5 seconds
-    //   if (this.flyingTime > 500) {
-    //     // show flying text
-    //     this.flyingText.setVisible(true)
-    //   }
-    // }
-
-    // // if wheels aren colliding...
-    // else {
-    //   // reset flying time
-    //   this.flyingTime = 0
-
-    //   // hide flying text
-    //   this.flyingText.setVisible(false)
-    // }
-
-    // // // zoom is calculated according to car speed.
-    // // // zoom = 1: no zoom
-    // // // zoom > 1: zoom in
-    // // // zoom < 1: zoom out
-    // // let zoom = 1 - Phaser.Math.Clamp(this.body.speed, 0, 15) / 25
-
-    // // // zoomTo method allows the camera to zoom at "zoom" ratio in 1000 milliseconds
-    // // // the most important argument is the 4th argument.
-    // // // If set to "false", camera won't adjust its zoom if already zooming.
-    // // this.cameras.main.zoomTo(zoom, 1000, 'Linear', false)
-
-    // // // make the game follow the car
-    // // this.cameras.main.scrollX =
-    // //   this.body.position.x - this.sys.canvas.width / 4 + this.sys.canvas.width * (1 - this.cameras.main.zoom)
-    // // this.cameras.main.scrollY = this.body.position.y - this.sys.canvas.height / 2.2
-
-    // // flyingText too should follow the car
-    // this.flyingText.x = 100 + this.cameras.main.scrollX
-
-    // // adjust velocity according to acceleration
-    // if (this.isAccelerating) {
-    //   let velocity = this.frontWheel.angularSpeed + state.carAcceleration
-    //   velocity = Phaser.Math.Clamp(velocity, 0, state.maxCarVelocity)
-
-    //   // set angular velocity to wheels
-    //   this.matter.body.setAngularVelocity(this.frontWheel, velocity)
-    //   this.matter.body.setAngularVelocity(this.rearWheel, velocity)
-    // }
 
     // loop through all mountains
     this.mountainGraphics.forEach(
@@ -528,27 +394,5 @@ export class GameScene extends Phaser.Scene {
       }.bind(this),
     )
 
-    // // get all bodies
-    // // @ts-ignore
-    // let bodies = this.matter.world.localWorld.bodies
-
-    // // loop through all bodies
-    // bodies.forEach(
-    //   function (body: any) {
-    //     // if the body is out of camera view to the left side and is not yet in the pool..
-    //     if (this.cameras.main.scrollX > body.position.x + this.sys.canvas.width && !body.inPool) {
-    //       // ...add the body to proper pool
-    //       switch (body.label) {
-    //         case 'ground':
-    //           this.bodyPool.push(body)
-    //           break
-    //         case 'rock':
-    //           this.rocksPool.push(body)
-    //           break
-    //       }
-    //       body.inPool = true
-    //     }
-    //   }.bind(this),
-    // )
   }
 }

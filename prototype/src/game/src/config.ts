@@ -18,7 +18,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     width: 1600,
     height: 900,
   },
-  scene: [PreloaderScene, ConnectWalletScene, GarageScene, GameScene, MarketplaceScene, BgScene],
+  scene: [PreloaderScene, BgScene, ConnectWalletScene, GarageScene, GameScene, MarketplaceScene],
   input: {
     keyboard: true,
     mouse: true,
