@@ -1,5 +1,20 @@
 import { Contracts, State } from './stateTypes'
 
+export const contracts: Contracts = {
+  5: {
+    //goerli
+    carsContract: '0x0D50D84d7EBd272A7274eaD20FE7a14F4CE80987',
+    },
+  15555: {
+    //trust-testnet
+    carsContract: '0x935e00E8Ad0e8BBDfDFE1D7f742b7A2C56765421',
+  },
+  80001: {
+    //polygon-mumbai
+    carsContract: '0xa992327Fb5d77B9d2A6593fB49b747a50B83C592',
+  },
+}
+
 export let state: State = {
   // start vertical point of the terrain, 0 = very top; 1 = very bottom
   startTerrainHeight: 0.5,

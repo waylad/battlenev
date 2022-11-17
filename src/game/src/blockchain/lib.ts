@@ -1,64 +1,37 @@
-import { state } from '../state/state'
+import { ethers } from 'ethers'
 import { CarToken } from '../state/stateTypes'
-import { getTronLink } from './tronLink'
-
-const ZombaxAbi = require('./abi/Zombax.json')
+import { contracts, state } from '../state/state'
+const CarsAbi = require('./abi/Cars.json')
+import type { Cars } from './types/contracts/Cars'
 
 declare var window: any
-const contractAddress = "TSyAsSP1SoUpiVi2ouaydnLFpZHo92Pkxe"
-const contractAddressHex = "41ba785befeba720d17297e14a125cc481d0c0ece3"
-let contractInstance;
+let provider: ethers.providers.Web3Provider
+let signer: ethers.providers.JsonRpcSigner
+let address: string
+let carsContractWithSigner: Cars
 
 export const connectWallet = async () => {
-  const tronLink = await getTronLink()
-  const res: any = await tronLink?.request({ method: 'tron_requestAccounts' })
+  provider = new ethers.providers.Web3Provider(window.ethereum)
+  const { chainId } = await provider.getNetwork()
+  console.log(chainId)
 
-  if(res) {
-    try{
-      contractInstance = tronLink?.tronWeb.contract(ZombaxAbi.abi, contractAddress)
-      const name = await contractInstance.name().call()
-      console.log(name)
-    } catch (e: any) {
-      console.log(e)
-       alert("Please connect to the Nile Testnet ")
-    }
-  } else {
-    alert("Please unlock your Tronlink Wallet ")
-  }
+  state.contracts = contracts[chainId]
+  if (!state.contracts || !state.contracts.carsContract)
+    throw new Error('Wrong Network. Please connect Metamask to the correct testnet.')
 
-    // await contractInstance.mintCollectable(address, "https://zombax.io/assets/cars/00000000.json", "Genesis Car", 30000000, true).send({
-    //   callValue: 0,
-    //   shouldPollResponse: true,
-    // })
-    // await contractInstance.mintCollectable(address, "https://zombax.io/assets/cars/00000110.json", "Genesis Car", 70000000, true).send({
-    //   callValue: 0,
-    //   shouldPollResponse: true,
-    // })
-    // await contractInstance.mintCollectable(address, "https://zombax.io/assets/cars/00000030.json", "Genesis Car", 200000000, true).send({
-    //   callValue: 0,
-    //   shouldPollResponse: true,
-    // })
-    // await contractInstance.mintCollectable(address, "https://zombax.io/assets/cars/01010330.json", "Genesis Car", 10000000, true).send({
-    //   callValue: 0,
-    //   shouldPollResponse: true,
-    // })
-    // await contractInstance.mintCollectable(address, "https://zombax.io/assets/cars/01010220.json", "Genesis Car", 10000000, true).send({
-    //   callValue: 0,
-    //   shouldPollResponse: true,
-    // })
-    // await contractInstance.mintCollectable(address, "https://zombax.io/assets/cars/01000110.json", "Genesis Car", 40000000, true).send({
-    //   callValue: 0,
-    //   shouldPollResponse: true,
-    // })
-    
+  await provider.send('eth_requestAccounts', [])
+
+  signer = provider.getSigner()
+  address = await signer.getAddress()
+
+  const carsContract = new ethers.Contract(state.contracts.carsContract, CarsAbi, provider)
+  carsContractWithSigner = <Cars>carsContract.connect(signer)
 }
 
 export const getCars = async () => {
-    const ownedCarsIds = await contractInstance.getTokensOwnedByMe().call()
-  console.log('ownedCarsIds', ownedCarsIds)
+  const ownedCarsIds = await carsContractWithSigner.getTokensOwnedByMe()
   ownedCarsIds.forEach(async (ownedCarsId) => {
-    // const carMeta = await carsContractWithSigner.tokenMeta(ownedCarsId)
-    const carMeta = await contractInstance.tokenMeta(ownedCarsId).call()
+    const carMeta = await carsContractWithSigner.tokenMeta(ownedCarsId)
     state.ownedCars.push({
       tokenId: carMeta[0].toNumber(),
       carCode: carMeta[3].replace('https://zombax.io/assets/cars/', '').replace('.json', ''),
@@ -68,9 +41,7 @@ export const getCars = async () => {
   })
   console.log(state.ownedCars)
 
-  // const onSaleCarsIds = await carsContractWithSigner.getAllOnSale()
-  const onSaleCarsIds = await contractInstance.getAllOnSale().call()
-  console.log('onSaleCarsIds', onSaleCarsIds)
+  const onSaleCarsIds = await carsContractWithSigner.getAllOnSale()
   onSaleCarsIds.forEach(async (onSaleCar) => {
     state.onSaleCars.push({
       tokenId: onSaleCar[0].toNumber(),
@@ -83,25 +54,24 @@ export const getCars = async () => {
 }
 
 export const buyCar = async (carToken: CarToken) => {
-  const tx = await contractInstance.purchaseToken(carToken.tokenId).send({
-    callValue: carToken.price,
-    shouldPollResponse: true,
+  const receipt = await carsContractWithSigner.purchaseToken(carToken.tokenId, {
+    value: carToken.price,
   })
+  const tx = await receipt.wait()
   console.log(tx)
 }
 
 export const sellCar = async (carToken: CarToken, price: number) => {
-  const tx = await contractInstance.setTokenSale(carToken.tokenId, true, price).send({
-    callValue: 0,
-    shouldPollResponse: true,
-  })
+  const receipt = await carsContractWithSigner.setTokenSale(carToken.tokenId, true, price)
+  const tx = await receipt.wait()
   console.log(tx)
 }
 
 export const upgradeCar = async (carToken: CarToken) => {
-  const tx = await contractInstance.updateTokenUri(carToken.tokenId, `https://zombax.io/assets/cars/${carToken.carCode}.json`).send({
-    callValue: 0,
-    shouldPollResponse: true,
-  })
+  const receipt = await carsContractWithSigner.updateTokenUri(
+    carToken.tokenId,
+    `https://zombax.io/assets/cars/${carToken.carCode}.json`,
+  )
+  const tx = await receipt.wait()
   console.log(tx)
 }
