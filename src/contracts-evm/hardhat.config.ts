@@ -54,9 +54,12 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
     case "klaytn-testnet":
       jsonRpcUrl = "https://api.baobab.klaytn.net:8651";
       break;
-      case "trust-testnet":
-        jsonRpcUrl = "https://api.testnet-dev.trust.one";
-        break;
+    case "trust-testnet":
+      jsonRpcUrl = "https://api.testnet-dev.trust.one";
+      break;
+    case "polygon-mumbai":
+      jsonRpcUrl = "https://rpc-mumbai.maticvigil.com";
+      break;
     default:
       jsonRpcUrl = "https://" + chain + ".infura.io/v3/" + infuraApiKey;
   }

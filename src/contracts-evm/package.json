@@ -1,5 +1,5 @@
 {
-  "name": "@prb/hardhat-template",
+  "name": "zombax-contracts-evm",
   "description": "Hardhat-based template for developing Solidity smart contracts",
   "version": "1.0.0",
   "author": {
@@ -80,8 +80,8 @@
     "commit": "git-cz",
     "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
     "coverage": "hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" && yarn typechain",
-    "deploy": "hardhat deploy:Cars --network trust-testnet",
-    "mint": "hardhat mint:Cars --network trust-testnet --address 0x935e00E8Ad0e8BBDfDFE1D7f742b7A2C56765421",
+    "deploy": "hardhat deploy:Cars --network polygon-mumbai",
+    "mint": "hardhat mint:Cars --network polygon-mumbai --address 0xFILL",
     "lint": "yarn lint:sol && yarn lint:ts && yarn prettier:check",
     "lint:sol": "solhint --config ./.solhint.json --max-warnings 0 \"contracts/**/*.sol\"",
     "lint:ts": "eslint --config ./.eslintrc.yml --ignore-path ./.eslintignore --ext .js,.ts .",
@@ -94,6 +94,7 @@
     "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "@openzeppelin/test-helpers": "^0.5.16",
     "hardhat-abi-exporter": "^2.10.1",
     "ipfs-http-client": "^58.0.1"
