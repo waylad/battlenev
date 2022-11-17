@@ -1,6 +1,8 @@
 import { ethers } from 'ethers'
-import { CarToken } from '../state/stateTypes'
+
 import { contracts, state } from '../state/state'
+import { CarToken } from '../state/stateTypes'
+
 const CarsAbi = require('./abi/Cars.json')
 import type { Cars } from './types/contracts/Cars'
 
@@ -51,6 +53,15 @@ export const getCars = async () => {
     })
   })
   console.log(state.onSaleCars)
+}
+
+export const mintRandomCar = async () => {
+  const receipt = await carsContractWithSigner.randomMint()
+  //   {
+  //   value: 10000000,
+  // })
+  const tx = await receipt.wait()
+  console.log(tx)
 }
 
 export const buyCar = async (carToken: CarToken) => {

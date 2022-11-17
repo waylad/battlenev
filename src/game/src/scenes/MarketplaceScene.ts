@@ -1,5 +1,6 @@
 import { CarToken } from 'state/stateTypes'
-import { getCars, buyCar, sellCar } from '../blockchain/lib'
+
+import { buyCar, getCars, mintRandomCar, sellCar } from '../blockchain/lib'
 import { state } from '../state/state'
 
 export class MarketplaceScene extends Phaser.Scene {
@@ -163,6 +164,31 @@ export class MarketplaceScene extends Phaser.Scene {
         this.displayCar(car, i, 1)
       }
     }
+
+    // Mint Random Button
+    const buttonBg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height - 100, 'button-big')
+    buttonBg.setInteractive({cursor: 'pointer'})
+    
+    const buttonText = this.add
+    .text(this.sys.canvas.width / 2, this.sys.canvas.height - 100, 'MINT RANDOM FOR 10 MATIC', {
+      fontFamily: 'Electrolize',
+      align: 'center',
+      wordWrap: { width: 600, useAdvancedWrap: true },
+    })
+    .setFontSize(34)
+    .setOrigin(0.5)
+
+    buttonBg.on('pointerdown', async () => {
+      buttonText.setText('LOADING...')
+      try {
+        await mintRandomCar()
+        await getCars()
+      } catch (e: any) {
+        console.log(e)
+        buttonText.setText('MINT RANDOM FOR 10 MATIC')
+        alert(e)
+      }
+    })
   }
 
   update(): void {}
