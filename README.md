@@ -28,7 +28,9 @@ We hired artist Robson Teixeira to create everything we’ll need for our game: 
 # Getting started
 
 The player will first need a SMASHER NFT to play the game. When you open the game, the first screen is the SMASHER marketplace, where you can buy and sell your SMASHERs from other players. Some are already upgraded and quite expensive and some are low-level and cheap.
-Our team will make sure to often mint and put on sale some new entry-level SMASHERs on the marketplace for new players to get started for cheap.
+
+Alternatively you can mint a random SMASHER thanks to chainlink VRF. It will cost you 1 MATIC (0 in the demo) and you may get a better SMASHER that what you would have gotten from the marketplace for that price (or a worse one, that's a like lootboxes, you don't know how valuable your random SMASHER will be).
+
 ![](https://vrf.zombax.io/assets/screenshots/marketplace.png)
 
 # Upgradability
@@ -88,7 +90,7 @@ We are far from done but we have already coded the basics of the project, availa
 https://vrf.zombax.io
 
 We created an ERC721 smart contract for the SMASHERs and added metadata upgradability and marketplace functionalities. We also developed the first part of the game using the Phaser.js engine. The marketplace and garage are fully functional and you can already pilot your SMASHER in a physics sandbox (that is empty so far)
-To play de prototype, you'll need to install Metamask, connect it to the `Polygon Mumbai Testnet` and have some tokens to buy a SMASHER NFT.
+To play de prototype, you'll need to install Metamask, connect it to the `Polygon Mumbai Testnet` and have some tokens to buy a SMASHER NFT. The SMASHER smart contract is deployed on https://mumbai.polygonscan.com/address/0x648d0073b169ebFb413108ACcf4d5558959F58e0
 
 # Todo list
 

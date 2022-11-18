@@ -11,7 +11,7 @@ export const contracts: Contracts = {
   },
   80001: {
     //polygon-mumbai
-    carsContract: '0x77B9f7936A053e73620D1Cf146724848dCD73b2D',
+    carsContract: '0x648d0073b169ebFb413108ACcf4d5558959F58e0',
   },
 }
 

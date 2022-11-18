@@ -81,7 +81,7 @@
     "compile": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat compile",
     "coverage": "hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"test/**/*.ts\" && yarn typechain",
     "deploy": "hardhat deploy:Cars --network polygon-mumbai",
-    "mint": "hardhat mint:Cars --network polygon-mumbai --address 0xFILL",
+    "mint": "hardhat mint:Cars --network polygon-mumbai --address 0x648d0073b169ebFb413108ACcf4d5558959F58e0",
     "lint": "yarn lint:sol && yarn lint:ts && yarn prettier:check",
     "lint:sol": "solhint --config ./.solhint.json --max-warnings 0 \"contracts/**/*.sol\"",
     "lint:ts": "eslint --config ./.eslintrc.yml --ignore-path ./.eslintignore --ext .js,.ts .",
