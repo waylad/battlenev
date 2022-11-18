@@ -26,7 +26,7 @@ export class MarketplaceScene extends Phaser.Scene {
     const partFuel = this.add.image(0, 0, `fuel${car.carCode[7]}`)
 
     const textPrice = this.add
-      .text(20, 145, `${car.price / 1000000} TRX`, {
+      .text(20, 145, `${car.price / 1000000} MATIC`, {
         fontFamily: 'Electrolize',
         align: 'center',
         wordWrap: { width: 140, useAdvancedWrap: true },
@@ -108,7 +108,7 @@ export class MarketplaceScene extends Phaser.Scene {
 
     this.add.container(
       this.sys.canvas.width / 2 - 580 + (i % 4) * 380,
-      this.sys.canvas.height / 2 - 230 + j * 400,
+      this.sys.canvas.height / 2 - 290 + j * 360,
       [carCell, textPrice, carContainer, buttonBuy, buttonSelect, buttonSell, textBuy, textSelect, textSell],
     )
   }
@@ -132,7 +132,7 @@ export class MarketplaceScene extends Phaser.Scene {
     )
 
     this.add
-      .text(50, 65, 'MY CARS', {
+      .text(50, 15, 'MY CARS', {
         fontFamily: 'Electrolize',
         align: 'center',
         wordWrap: { width: 240, useAdvancedWrap: true },
@@ -149,7 +149,7 @@ export class MarketplaceScene extends Phaser.Scene {
     }
 
     this.add
-      .text(50, 450, 'MARKETPLACE', {
+      .text(50, 380, 'MARKETPLACE', {
         fontFamily: 'Electrolize',
         align: 'center',
         wordWrap: { width: 240, useAdvancedWrap: true },
@@ -170,7 +170,7 @@ export class MarketplaceScene extends Phaser.Scene {
     buttonBg.setInteractive({cursor: 'pointer'})
     
     const buttonText = this.add
-    .text(this.sys.canvas.width / 2, this.sys.canvas.height - 100, 'MINT RANDOM FOR 10 MATIC', {
+    .text(this.sys.canvas.width / 2, this.sys.canvas.height - 100, 'MINT RANDOM FOR 1 MATIC', {
       fontFamily: 'Electrolize',
       align: 'center',
       wordWrap: { width: 600, useAdvancedWrap: true },

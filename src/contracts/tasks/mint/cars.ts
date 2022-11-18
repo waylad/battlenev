@@ -20,32 +20,32 @@ task("mint:Cars")
 
     const mint1 = await cars
       .connect(signers[0])
-      .mintCollectable(signers[0].address, "https://zombax.io/assets/cars/00000000.json", "Genesis Car", 30000000, true); //0.03 ETH
+      .mintCollectable(signers[0].address, "https://vrf.zombax.io/assets/cars/00000000.json", "Genesis Car", 30000000, true); //0.03 ETH
     await mint1.wait();
 
     const mint2 = await cars
       .connect(signers[0])
-      .mintCollectable(signers[0].address, "https://zombax.io/assets/cars/00000000.json", "Genesis Car", 3000000, true);  //0.003 ETH
+      .mintCollectable(signers[0].address, "https://vrf.zombax.io/assets/cars/00000000.json", "Genesis Car", 3000000, true);  //0.003 ETH
     await mint2.wait();
 
     const mint3 = await cars
       .connect(signers[0])
-      .mintCollectable(signers[0].address, "https://zombax.io/assets/cars/00000110.json", "Genesis Car", 1000000, true);
+      .mintCollectable(signers[0].address, "https://vrf.zombax.io/assets/cars/00000110.json", "Genesis Car", 1000000, true);
     await mint3.wait();
 
     const mint4 = await cars
       .connect(signers[0])
-      .mintCollectable(signers[0].address, "https://zombax.io/assets/cars/00000030.json", "Genesis Car", 2000000, true);
+      .mintCollectable(signers[0].address, "https://vrf.zombax.io/assets/cars/00000030.json", "Genesis Car", 2000000, true);
     await mint4.wait();
 
     const mint5 = await cars
       .connect(signers[0])
-      .mintCollectable(signers[0].address, "https://zombax.io/assets/cars/00000000.json", "Genesis Car", 3000000, true);
+      .mintCollectable(signers[0].address, "https://vrf.zombax.io/assets/cars/00000000.json", "Genesis Car", 3000000, true);
     await mint5.wait();
 
     const mint6 = await cars
       .connect(signers[0])
-      .mintCollectable(signers[0].address, "https://zombax.io/assets/cars/01010330.json", "Genesis Car", 4000000, true);
+      .mintCollectable(signers[0].address, "https://vrf.zombax.io/assets/cars/01010330.json", "Genesis Car", 4000000, true);
     await mint6.wait();
 
     const carsOnSale = await cars.connect(signers[0]).getAllOnSale();

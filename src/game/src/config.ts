@@ -8,7 +8,7 @@ import { BgScene } from './scenes/bgScene'
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: 'Zombax',
-  url: 'https://zombax.io',
+  url: 'https://vrf.zombax.io',
   version: '3.0',
   type: Phaser.AUTO,
   scale: {

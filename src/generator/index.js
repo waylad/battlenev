@@ -81,7 +81,7 @@ async function createImage(car, boost, weight, gun, gear, armor, wheel, fuel) {
   const meta = {
     name: `Zombax Car ${carCode}`,
     description: 'A Zombax Upgradable Car',
-    external_url: `https://zombax.io/assets/cars/${carCode}.svg`,
+    external_url: `https://vrf.zombax.io/assets/cars/${carCode}.svg`,
     image: `ipfs://${upload.path}`,
     attributes: [
       {

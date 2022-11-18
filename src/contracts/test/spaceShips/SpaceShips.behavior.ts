@@ -7,7 +7,7 @@ export function shouldBehaveLikeCars(): void {
       .connect(this.signers.admin)
       .mintCollectable(
         this.signers.admin.address,
-        "https://zombax.io/assets/cars/0000.json",
+        "https://vrf.zombax.io/assets/cars/0000.json",
         "Test Token",
         2,
         false,
@@ -24,10 +24,10 @@ export function shouldBehaveLikeCars(): void {
     // Update Meta
     const updateReceipt = await this.cars
       .connect(this.signers.admin)
-      .updateTokenUri(1, "https://zombax.io/assets/cars/1231.json");
+      .updateTokenUri(1, "https://vrf.zombax.io/assets/cars/1231.json");
     await updateReceipt.wait();
     const getMetaReceipt = await this.cars.connect(this.signers.admin).tokenMeta(1);
-    expect(getMetaReceipt[3]).to.equal("https://zombax.io/assets/cars/1231.json");
+    expect(getMetaReceipt[3]).to.equal("https://vrf.zombax.io/assets/cars/1231.json");
 
     // Transfer token
     const transferReceipt = await this.cars

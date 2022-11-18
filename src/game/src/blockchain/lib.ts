@@ -36,7 +36,7 @@ export const getCars = async () => {
     const carMeta = await carsContractWithSigner.tokenMeta(ownedCarsId)
     state.ownedCars.push({
       tokenId: carMeta[0].toNumber(),
-      carCode: carMeta[3].replace('https://zombax.io/assets/cars/', '').replace('.json', ''),
+      carCode: carMeta[3].replace('https://vrf.zombax.io/assets/cars/', '').replace('.json', ''),
       price: carMeta[1].toNumber(),
       owned: true,
     })
@@ -47,7 +47,7 @@ export const getCars = async () => {
   onSaleCarsIds.forEach(async (onSaleCar) => {
     state.onSaleCars.push({
       tokenId: onSaleCar[0].toNumber(),
-      carCode: onSaleCar[3].replace('https://zombax.io/assets/cars/', '').replace('.json', ''),
+      carCode: onSaleCar[3].replace('https://vrf.zombax.io/assets/cars/', '').replace('.json', ''),
       price: onSaleCar[1].toNumber(),
       owned: false,
     })
@@ -81,7 +81,7 @@ export const sellCar = async (carToken: CarToken, price: number) => {
 export const upgradeCar = async (carToken: CarToken) => {
   const receipt = await carsContractWithSigner.updateTokenUri(
     carToken.tokenId,
-    `https://zombax.io/assets/cars/${carToken.carCode}.json`,
+    `https://vrf.zombax.io/assets/cars/${carToken.carCode}.json`,
   )
   const tx = await receipt.wait()
   console.log(tx)

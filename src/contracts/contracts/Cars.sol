@@ -72,6 +72,7 @@ contract Cars is ERC721, VRFConsumerBaseV2, ConfirmedOwner {
         lastRequestId = requestId;
         requestIdToSender[requestId] = msg.sender;
         emit RequestSent(requestId, numWords);
+
         return requestId;
     }
 
@@ -97,7 +98,7 @@ contract Cars is ERC721, VRFConsumerBaseV2, ConfirmedOwner {
 
         string memory tokenUri = string(
             abi.encodePacked(
-                "https://zombax.io/assets/cars/",
+                "https://vrf.zombax.io/assets/cars/",
                 car,
                 boost,
                 weight,
