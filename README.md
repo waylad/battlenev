@@ -7,7 +7,7 @@ Zombax is zombie smashing game on Polygon with upgradable NFTs and an integrated
 
 # Demo Video
 
-Coming soon...
+https://youtu.be/bMpc0qpHZIU
 
 # Concept
 
